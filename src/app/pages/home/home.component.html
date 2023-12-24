@@ -1,0 +1,67 @@
+<div id="home-container">
+  <button (click)="peuplerBD()">Peupler BD</button>
+  <button mat-flat-button color="primary" (click)="openAddAssignementDialog()">
+    Add assignment
+  </button>
+
+  <div class="mat-elevation-z3">
+    <table mat-table [dataSource]="dataSource!" matSort>
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+        <td mat-cell *matCellDef="let element">{{ element.nom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="rendu">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Rendu</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="element.rendu ? 'green' : 'red'"
+        >
+          {{ element.rendu ? "Rendu" : "Non rendu" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dateDeRendu">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de rendu</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dateDeRendu | date: "fullDate" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="matiere">
+        <th mat-header-cell *matHeaderCellDef>Matiere</th>
+        <td mat-cell *matCellDef="let element">{{ element.matiere.nom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="auteur">
+        <th mat-header-cell *matHeaderCellDef>Auteur</th>
+        <td mat-cell *matCellDef="let element">{{ element.auteur.nom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Note</th>
+        <td mat-cell *matCellDef="let element">{{ element.note }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        (click)="getDetails(row)"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
+
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="totalDocs"
+      [pageSize]="limit"
+      [showFirstLastButtons]="true"
+      [pageSizeOptions]="[5, 10, 20]"
+      [hidePageSize]="false"
+      [pageIndex]="page - 1"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>

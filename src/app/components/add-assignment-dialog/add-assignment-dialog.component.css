@@ -1,0 +1,16 @@
+#add-assignment-form {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#add-assignment-header {
+  background-color: #4050b5;
+  color: white;
+}
+
+mat-form-field {
+  width: 100%;
+}
