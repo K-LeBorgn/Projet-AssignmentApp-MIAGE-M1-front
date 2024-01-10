@@ -5,3 +5,8 @@
 .sidenav {
   width: 300px;
 }
+
+mat-toolbar-row > a{
+  text-decoration: none;
+  color: white;
+}

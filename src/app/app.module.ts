@@ -29,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AssignementDetailsComponent } from './pages/assignement-details/assignement-details.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatStepperModule} from "@angular/material/stepper";
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -63,6 +64,7 @@ registerLocaleData(localeFr, 'fr');
         MatCheckboxModule,
         MatProgressSpinnerModule,
         NgOptimizedImage,
+        MatStepperModule,
     ],
   providers: [provideHttpClient(), { provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent],

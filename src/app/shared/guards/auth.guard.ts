@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       return true;
     } else {
       console.log("Vous n'êtes pas admin ! Navigation refusée !");
-      router.navigate(['/home']);
+      //router.navigate(['/home']);
       return false;
     }
   });

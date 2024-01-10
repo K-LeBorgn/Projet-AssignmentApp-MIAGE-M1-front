@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AssignmentService } from '../../shared/services/assignment.service';
 import { Matiere } from '../../shared/models/matiere.model';
-import { FormControl, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import { MatiereService } from '../../shared/services/matiere.service';
 import { AddAssignmentRequest } from '../../shared/models/addAssignmentRequest.model';
 
@@ -12,14 +12,20 @@ import { AddAssignmentRequest } from '../../shared/models/addAssignmentRequest.m
   styleUrls: ['./add-assignment-dialog.component.css'],
 })
 export class AddAssignmentDialogComponent implements OnInit {
-  name: string = '';
-  date: Date = new Date();
   matieres: Matiere[] = [];
-  matiereControl = new FormControl<Matiere | null>(null, Validators.required);
+
+  firstFormGroup = this._formBuilder.group({
+    nameCtrl: ['', Validators.required],
+    dateCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    matiereCtrl: ['', Validators.required]
+  });
   constructor(
     public dialogRef: MatDialogRef<AddAssignmentDialogComponent>,
     public assignmentService: AssignmentService,
     public matiereService: MatiereService,
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +39,18 @@ export class AddAssignmentDialogComponent implements OnInit {
   }
 
   onAdd(): void {
-    if (this.name && this.date && this.matiereControl.value) {
+    const matiere = this.secondFormGroup.value.matiereCtrl;
+    const name = this.firstFormGroup.value.nameCtrl;
+    const date = this.firstFormGroup.value.dateCtrl;
+    if (name && date && matiere) {
       let a = new AddAssignmentRequest();
-      a.id = Math.floor(Math.random() * 10000);
-      a.nom = this.name;
-      if (this.date) a.dateDeRendu = this.date;
+      a.id = Math.floor(Math.random() * 10) * 10000;
+      a.nom = name;
+      a.dateDeRendu = new Date(date);
       a.rendu = false;
+      a.matiere = matiere;
+      //a.auteur = ;
+      a.auteur = '658456dc977bb51a7e8f3b80';
 
       this.assignmentService.addAssignment(a).subscribe((message) => {
         console.log(message);

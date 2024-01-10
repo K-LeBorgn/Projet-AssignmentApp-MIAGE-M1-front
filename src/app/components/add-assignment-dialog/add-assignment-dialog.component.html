@@ -1,6 +1,6 @@
 <h1 mat-dialog-title id="add-assignment-header">Add Assignement</h1>
 <div mat-dialog-content id="add-assignment-form">
-  <mat-form-field appearance="outline">
+  <!--<mat-form-field appearance="outline">
     <mat-label>Nom</mat-label>
     <input matInput placeholder="Nom" [(ngModel)]="name" name="nom" required />
     <mat-error>Veuillez choisir un nom</mat-error>
@@ -32,9 +32,67 @@
     <mat-error *ngIf="matiereControl.hasError('required')"
       >Veuillez choisir une matière</mat-error
     >
-  </mat-form-field>
+  </mat-form-field>-->
+
+  <mat-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Remplissez les détails</ng-template>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput placeholder="Nom de l'assignment" formControlName="nameCtrl" required>
+          <mat-error>Veuillez choisir un nom pour l'assignment</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Sélectionnez une date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            name="date"
+            formControlName="dateCtrl"
+            required
+          />
+          <mat-error>Veuillez choisir une date</mat-error>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button color="primary" (click)="onClose()">Annuler</button>
+          <button mat-button color="primary" matStepperNext>Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="Ajoutez la matière">
+      <form [formGroup]="secondFormGroup">
+        <mat-form-field>
+          <mat-label>Matière</mat-label>
+          <mat-select formControlName="matiereCtrl" [required]="true">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let matiere of matieres" [value]="matiere._id">
+              {{ matiere.nom }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Veuillez choisir une matière</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button color="primary" matStepperPrevious>Retour</button>
+          <button mat-button color="primary" matStepperNext>Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Validez</ng-template>
+      <p>Vous avez fini.</p>
+      <div>
+        <button mat-button color="primary" matStepperPrevious>Retour</button>
+        <button mat-button color="primary" (click)="stepper.reset()">Reset</button>
+        <button mat-button color="primary" (click)="onAdd()">Valider</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>
-<div id="actions" mat-dialog-actions align="end">
+<!--<div id="actions" mat-dialog-actions align="end">
   <button mat-flat-button color="primary" (click)="onClose()">Cancel</button>
   <button mat-flat-button color="primary" (click)="onAdd()">Add</button>
-</div>
+</div>-->

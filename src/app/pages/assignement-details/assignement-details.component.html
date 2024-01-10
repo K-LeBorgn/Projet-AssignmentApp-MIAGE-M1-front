@@ -10,22 +10,38 @@
     <div class="assignment-detail-container">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>{{ assignment!.nom }}</mat-card-title>
-          <mat-card-subtitle>{{ assignment!.dateDeRendu | date }}</mat-card-subtitle>
-          <div class="prof">
-            <img id="imageProf" [ngSrc]="assignment!.matiere.imageProf" [alt]="assignment!.matiere.prof" class="assignment-image" width="50" height="50"/>
-            <mat-card-subtitle style="margin: 0 5px">{{ assignment!.matiere.prof }}</mat-card-subtitle>
+          <div id="details-header">
+            <div>
+              <mat-card-title>{{ assignment!.nom }}</mat-card-title>
+              <mat-card-subtitle>{{ assignment!.dateDeRendu | date }}</mat-card-subtitle>
+              <p id="other-subtitle">{{ assignment!.matiere.nom }}</p>
+            </div>
+            <div class="prof">
+              <img id="imageProf" [ngSrc]="assignment!.matiere.imageProf" [alt]="assignment!.matiere.prof" class="assignment-image" width="50" height="50"/>
+              <mat-card-subtitle style="margin: 0 5px">{{ assignment!.matiere.prof }}</mat-card-subtitle>
+            </div>
           </div>
         </mat-card-header>
         <hr/>
         <mat-card-content>
-          <img [ngSrc]="assignment!.matiere.imageMatiere" [alt]="assignment!.matiere.nom" class="assignment-image" width="150" height="100"/>
-
-          <p *ngIf="assignment!.note" [ngClass]="getNoteStyle(assignment!.note)">{{ assignment!.note }} / 20</p>
-          <p *ngIf="!assignment!.note">Pas encore noté</p>
-
+          <div id="note_matiere_container">
+            <ng-container *ngIf="assignment!.note">
+              <div id="outside-circle" [style]="circleColor">
+                <div id="inner-circle">
+                  <p *ngIf="assignment!.note" [ngClass]="getNoteStyle(assignment!.note)">{{ assignment!.note }} / 20</p>
+                </div>
+              </div>
+            </ng-container>
+            <p *ngIf="!assignment!.note">Pas encore noté</p>
+            <img [ngSrc]="assignment!.matiere.imageMatiere" [alt]="assignment!.matiere.nom" class="assignment-image" width="100" height="100"/>
+          </div>
+          <textarea matInput rows="10" cols="50" [disabled]="true" placeholder="Remarques">{{ assignment!.remarques }}</textarea>
           <mat-checkbox [checked]="assignment!.rendu" [disabled]="true" color="primary">Rendu</mat-checkbox>
         </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" routerLink="/home">Retour</button>
+          <button mat-raised-button color="primary" routerLink="/home/{{ assignment!.id }}/edit" [disabled]="authService.isAdmin()">Modifier</button>
+        </mat-card-actions>
       </mat-card>
     </div>
   </ng-template>

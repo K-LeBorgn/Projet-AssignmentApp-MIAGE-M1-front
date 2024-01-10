@@ -1,0 +1,61 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$custom-primary: (
+  50: #dfede8,
+  100: #b2d3c6,
+  200: #83b7a2,
+  300: #5a9b80,
+  400: #42876b,
+  500: #327457,
+  600: #2e684d,
+  700: #275a41,
+  800: #214a35,
+  900: #163020,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+$projet-assignments-front-primary: mat.define-palette($custom-primary, 800);
+$projet-assignments-front-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$projet-assignments-front-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$projet-assignments-front-theme: mat.define-light-theme((
+  color: (
+    primary: $projet-assignments-front-primary,
+    accent: $projet-assignments-front-accent,
+    warn: $projet-assignments-front-warn,
+  )
+));
+
+
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($projet-assignments-front-theme);
+

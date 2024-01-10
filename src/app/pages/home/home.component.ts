@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
 
   openAddAssignementDialog(): void {
     this.dialog.open(AddAssignmentDialogComponent, {
-      width: '400px',
+      width: '700px',
     });
   }
 }
