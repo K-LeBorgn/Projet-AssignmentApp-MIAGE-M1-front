@@ -33,6 +33,12 @@ export class AssignmentService {
     );
   }
 
+  getAssignmentsPagineByName(page: number, limit: number, nom: string): Observable<any> {
+    return this.http.get<Assignment[]>(
+      this.url + '/search/' + '?page=' + page + '&limit=' + limit + '&name=' + nom,
+    );
+  }
+
   addAssignment(assignment: AddAssignmentRequest): Observable<any> {
     return this.http.post<Assignment>(this.url, assignment);
   }

@@ -45,12 +45,22 @@ export class HomeComponent implements OnInit {
     'auteur',
     'note',
   ];
+  assignmentName: string = '';
+  getByName: boolean = false;
+
+  actualLimit: number = 5;
 
   @ViewChild(MatSort) sort: MatSort | null = null;
   dataSource: MatTableDataSource<Assignment> | null = null;
 
   getDetails(a: Assignment) {
     this.router.navigate(['/assignment', a.id]);
+  }
+
+  resetFilter() {
+    this.getAssignments(1, this.actualLimit);
+    this.assignmentName = '';
+    this.getByName = false;
   }
 
   ngOnInit(): void {
@@ -75,6 +85,26 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  getAssignmentsByName(page: number, limit: number) {
+    this.assignmentsService
+      .getAssignmentsPagineByName(page, limit, this.assignmentName)
+      .subscribe((data) => {
+        this.assignments = data.docs;
+        this.page = data.page;
+        this.totalDocs = data.totalDocs;
+        this.totalPages = data.totalPages;
+        this.hasPrevPage = data.hasPrevPage;
+        this.prevPage = data.prevPage;
+        this.hasNextPage = data.hasNextPage;
+        this.nextPage = data.nextPage;
+
+        this.dataSource = new MatTableDataSource<Assignment>(this.assignments);
+        this.dataSource.sort = this.sort;
+
+        this.getByName = true;
+      });
+  }
+
   peuplerBD() {
     this.assignmentsService.peuplerBDavecForkJoin().subscribe(() => {
       //console.log("LA BD A ETE PEUPLEE, TOUS LES ASSIGNMENTS AJOUTES, ON RE-AFFICHE LA LISTE");
@@ -84,7 +114,13 @@ export class HomeComponent implements OnInit {
 
   handlePageEvent(event: any) {
     //console.log(event.pageIndex + 1, event.pageSize);
-    this.getAssignments(event.pageIndex + 1, event.pageSize);
+    this.actualLimit = event.pageSize;
+    if(this.getByName){
+      this.getAssignmentsByName(event.pageIndex + 1, event.pageSize);
+    }
+    else {
+      this.getAssignments(event.pageIndex + 1, event.pageSize)
+    }
   }
 
   openAddAssignementDialog(): void {

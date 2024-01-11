@@ -9,7 +9,7 @@ import {AuthService} from "../../shared/services/auth.service";
   templateUrl: './assignement-details.component.html',
   styleUrls: ['./assignement-details.component.css'],
 })
-export class AssignementDetailsComponent implements OnInit, AfterViewInit {
+export class AssignementDetailsComponent implements OnInit {
   assignment: Assignment | null = null;
   circleColor: string = '';
 
@@ -25,10 +25,6 @@ export class AssignementDetailsComponent implements OnInit, AfterViewInit {
       .subscribe((assignment) => {
         this.assignment = assignment;
       });
-  }
-
-  ngAfterViewInit(): void {
-    this.assignment.
   }
 
   getNoteStyle(note: number): string {
