@@ -1,12 +1,10 @@
-<div *ngIf="assignment == null;then loading else loaded"></div>
-
-  <ng-template #loading>
+  <ng-container *ngIf="assignment == null && !error">
     <div class="assignment-detail-container">
       <mat-spinner/>
     </div>
-  </ng-template>
+  </ng-container>
 
-  <ng-template #loaded>
+  <ng-container *ngIf="assignment != null && !error">
     <div class="assignment-detail-container">
       <mat-card>
         <mat-card-header>
@@ -40,9 +38,28 @@
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-raised-button color="primary" routerLink="/home">Retour</button>
-          <button mat-raised-button color="primary" routerLink="/home/{{ assignment!.id }}/edit" [disabled]="authService.isAdmin()">Modifier</button>
+          <button mat-raised-button color="primary" routerLink="/assignment/edit/{{ assignment!.id }}" [disabled]="!loggedIn">Modifier</button>
+          <button mat-mini-fab color="primary" (click)="onDelete()" [disabled]="!admin">
+            <mat-icon>delete</mat-icon>
+          </button>
         </mat-card-actions>
       </mat-card>
     </div>
-  </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="assignment == null && error">
+    <div class="assignment-detail-container">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Erreur</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Vous n'avez pas les droits requis</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" routerLink="/home">Retour</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
 

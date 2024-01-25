@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +11,22 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private _snackBar: MatSnackBar,
   ) {}
 
   login(event: any) {
-    //console.log(event.target.username.value, " / ", event.target.password.value);
-    let message =
-      event.target.username.value + ' / ' + event.target.password.value;
-    this._snackBar.open(message, 'OK');
+    this.authService.logIn(event.target.username.value, event.target.password.value).subscribe({
+      next: (data) => {
+        if (data.user) {
+          this.authService.setLoggedIn(true);
+          this.authService.setUserConnected(data.user);
+          this.authService.setAccessToken(data.accessToken);
+          this.authService.setRefreshToken(data.refreshToken);
+          this.router.navigate(['/home']);
+        }
+      },
+      error: (error) => {
+        console.log(error);
+      },complete: () => {}
+    });
   }
 }

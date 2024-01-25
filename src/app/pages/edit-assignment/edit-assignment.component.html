@@ -1,0 +1,57 @@
+<ng-container *ngIf="assignment == null">
+  <div class="assignment-detail-container">
+    <mat-spinner/>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="assignment != null">
+  <div class="assignment-detail-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Edit assignment</mat-card-title>
+      </mat-card-header>
+      <hr/>
+      <mat-card-content class="assignment-form">
+
+          <mat-form-field appearance="outline" [formGroup]="assignmentFormGroup!">
+            <mat-label>Nom</mat-label>
+            <input matInput formControlName="nom">
+            <mat-error>Un nom est requis</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [formGroup]="assignmentFormGroup!">
+            <mat-label>Date de rendu</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dateDeRendu">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>Une date est requise</mat-error>
+          </mat-form-field>
+
+          <mat-checkbox [(ngModel)]="assignment.rendu" (ngModelChange)="onChange()" color="primary">Rendu</mat-checkbox>
+
+          <mat-form-field appearance="outline" [formGroup]="assignmentFormGroup!" *ngIf="assignment.rendu">
+            <mat-label>Note</mat-label>
+            <input matInput formControlName="note">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [formGroup]="assignmentFormGroup!">
+            <mat-label>Matière</mat-label>
+            <mat-select formControlName="matiere">
+              <mat-option *ngFor="let matiere of matieres" [value]="matiere._id">
+                {{ matiere.nom }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [formGroup]="assignmentFormGroup!">
+            <mat-label>Remarques</mat-label>
+            <textarea matInput formControlName="remarques"></textarea>
+          </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" routerLink="/assignment/{{this.assignment!.id}}">Retour</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Valider</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>

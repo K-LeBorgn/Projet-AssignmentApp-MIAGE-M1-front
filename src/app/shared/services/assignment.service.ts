@@ -7,6 +7,7 @@ import { bdInitialAssignments } from '../data/data_assignments';
 import { bdInitialMatieres } from '../data/data_matieres';
 import { AddAssignmentRequest } from '../models/addAssignmentRequest.model';
 import { bdInitialEleves } from '../data/data_eleves';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,13 @@ export class AssignmentService {
   constructor(
     private loggingService: LoggingService,
     private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   url = 'http://localhost:8010/api/assignments';
 
   getAssignment(id: any): Observable<Assignment> {
-    return this.http.get<Assignment>(this.url + '/' + id);
+    return this.http.get<Assignment>(`${this.url}/${id}`);
   }
 
   getAssignments(): Observable<Assignment[]> {
@@ -44,11 +46,19 @@ export class AssignmentService {
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
-    return this.http.put<Assignment>(this.url, assignment);
+    return this.http.put<Assignment>(this.url, assignment,{
+      headers: {
+        Authorization: `Bearer ${this.authService.getAccessToken()}`
+      }
+    });
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
-    return this.http.delete(this.url + '/' + assignment._id);
+    return this.http.delete(this.url + '/' + assignment._id,{
+      headers: {
+        Authorization: `Bearer ${this.authService.getAccessToken()}`
+      }
+    });
   }
 
   peuplerBDavecForkJoin(): Observable<any> {

@@ -24,12 +24,12 @@ import { MatSortModule } from '@angular/material/sort';
 import localeFr from '@angular/common/locales/fr';
 import {NgOptimizedImage, registerLocaleData} from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { AssignementDetailsComponent } from './pages/assignement-details/assignement-details.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatStepperModule} from "@angular/material/stepper";
+import { EditAssignmentComponent } from './pages/edit-assignment/edit-assignment.component';
 
 registerLocaleData(localeFr, 'fr');
 @NgModule({
@@ -39,6 +39,7 @@ registerLocaleData(localeFr, 'fr');
     LoginComponent,
     AddAssignmentDialogComponent,
     AssignementDetailsComponent,
+    EditAssignmentComponent,
   ],
     imports: [
         BrowserModule,
@@ -58,7 +59,6 @@ registerLocaleData(localeFr, 'fr');
         MatTableModule,
         MatSortModule,
         MatCardModule,
-        MatSnackBarModule,
         MatSelectModule,
         ReactiveFormsModule,
         MatCheckboxModule,

@@ -22,7 +22,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 })
 export class HomeComponent implements OnInit {
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private assignmentsService: AssignmentService,
     public dialog: MatDialog,
@@ -50,6 +50,8 @@ export class HomeComponent implements OnInit {
 
   actualLimit: number = 5;
 
+  loggedIn: boolean = false;
+
   @ViewChild(MatSort) sort: MatSort | null = null;
   dataSource: MatTableDataSource<Assignment> | null = null;
 
@@ -65,6 +67,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAssignments(this.page, this.limit);
+    this.authService.isLogged().then((data) => {
+      if (data) {
+        this.loggedIn = true;
+      }
+    });
   }
 
   getAssignments(page: number, limit: number) {

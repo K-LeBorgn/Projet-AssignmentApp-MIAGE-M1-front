@@ -1,5 +1,5 @@
 import { Matiere } from './matiere.model';
-import { Eleve } from './eleve.model';
+import { User } from './user.model';
 
 export class Assignment {
   _id?: string;
@@ -7,8 +7,8 @@ export class Assignment {
   nom!: string;
   dateDeRendu!: Date;
   rendu!: boolean;
-  auteur!: Eleve;
+  auteur!: User;
   matiere!: Matiere;
-  note!: number | undefined;
+  note!: number | null;
   remarques!: string;
 }

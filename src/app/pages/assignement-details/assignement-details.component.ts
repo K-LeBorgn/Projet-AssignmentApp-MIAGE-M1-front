@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import { AssignmentService } from '../../shared/services/assignment.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Assignment } from '../../shared/models/assignment.model';
 import {AuthService} from "../../shared/services/auth.service";
 
@@ -11,20 +11,31 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class AssignementDetailsComponent implements OnInit {
   assignment: Assignment | null = null;
+  error : boolean = false;
   circleColor: string = '';
+  loggedIn : boolean  = false;
+  admin : boolean = false;
 
   constructor(
     public assignmentService: AssignmentService,
-    public route: ActivatedRoute,
+    public activatedRoute: ActivatedRoute,
+    private route: Router,
     public authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.assignmentService
-      .getAssignment(this.route.snapshot.paramMap.get('id'))
+      .getAssignment(this.activatedRoute.snapshot.paramMap.get('id'))
       .subscribe((assignment) => {
         this.assignment = assignment;
       });
+
+    this.authService.isLogged().then((data) => {
+      this.loggedIn = data;
+    });
+    this.authService.isAdmin().then((data) => {
+      this.admin = data;
+    });
   }
 
   getNoteStyle(note: number): string {
@@ -42,5 +53,28 @@ export class AssignementDetailsComponent implements OnInit {
       return 'green';
     }
     return "";
+  }
+
+  onDelete(): void {
+    this.assignmentService.deleteAssignment(this.assignment!).subscribe({
+      next: () => {
+        this.route.navigate(['/home']);
+      },
+      error: (error) => {
+        if (error.status === 403) {
+          this.authService.getNewAccessToken().subscribe({
+            next: (data: any) => {
+              this.authService.setAccessToken(data.accessToken);
+              this.assignmentService.deleteAssignment(this.assignment!).subscribe(() => {
+                this.route.navigate(['/home']);
+              });
+            },
+            error: (error) => {
+              this.error = true;
+            }
+          });
+        }
+      }
+    });
   }
 }

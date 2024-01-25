@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient } from "@angular/common/http";
 import { LoginResponse } from "../response/loginResponse";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root',
@@ -53,6 +54,11 @@ export class AuthService {
 
   logOut() {
     this.http.post(this.url + '/logout', { refreshToken : this.refreshToken })
+    this.loggedIn = false;
+    this.userConnected = undefined;
+    this.accessToken = undefined;
+    this.refreshToken = undefined;
+    window.location.reload();
   }
 
   isAdmin(): Promise<boolean> {
