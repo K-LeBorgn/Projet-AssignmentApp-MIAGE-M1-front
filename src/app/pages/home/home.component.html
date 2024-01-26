@@ -1,11 +1,12 @@
 <div id="home-container">
   <!--<button (click)="peuplerBD()">Peupler BD</button>-->
   <div id="action-container">
-    <button mat-flat-button color="primary" (click)="openAddAssignementDialog()" [disabled]="!loggedIn">
+    <button mat-flat-button color="primary" (click)="openAddAssignementDialog()" [disabled]="!authService.loggedIn">
       Ajouter un assignment
     </button>
 
     <div id="search">
+      <mat-checkbox color="primary" (change)="onCheckBoxChange($event)">Rendu</mat-checkbox>
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Recherche</mat-label>
         <input

@@ -5,6 +5,7 @@ import { Matiere } from '../../shared/models/matiere.model';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import { MatiereService } from '../../shared/services/matiere.service';
 import { AddAssignmentRequest } from '../../shared/models/addAssignmentRequest.model';
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-add-assignment-dialog',
@@ -25,7 +26,8 @@ export class AddAssignmentDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AddAssignmentDialogComponent>,
     public assignmentService: AssignmentService,
     public matiereService: MatiereService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -49,8 +51,7 @@ export class AddAssignmentDialogComponent implements OnInit {
       a.dateDeRendu = new Date(date);
       a.rendu = false;
       a.matiere = matiere;
-      //a.auteur = ;
-      a.auteur = '658456dc977bb51a7e8f3b80';
+      a.auteur = this.authService.userConnected!._id;
 
       this.assignmentService.addAssignment(a).subscribe((message) => {
         console.log(message);

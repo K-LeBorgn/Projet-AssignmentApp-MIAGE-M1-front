@@ -48,15 +48,19 @@ export class AssignmentService {
   updateAssignment(assignment: Assignment): Observable<any> {
     return this.http.put<Assignment>(this.url, assignment,{
       headers: {
-        Authorization: `Bearer ${this.authService.getAccessToken()}`
+        Authorization: `Bearer ${this.authService.accessToken}`
       }
     });
+  }
+
+  getAssignmentsRendu(page: number, limit: number): Observable<any> {
+    return this.http.get<Assignment[]>(this.url + '/rendu/' + '?page=' + page + '&limit=' + limit);
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
     return this.http.delete(this.url + '/' + assignment._id,{
       headers: {
-        Authorization: `Bearer ${this.authService.getAccessToken()}`
+        Authorization: `Bearer ${this.authService.accessToken}`
       }
     });
   }

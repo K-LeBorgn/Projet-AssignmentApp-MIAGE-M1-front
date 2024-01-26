@@ -1,9 +1,33 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <a routerLink="home">Assignment App</a>
+    <div id="left-content">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a routerLink="home">Assignment App</a>
+    </div>
+    <ng-container *ngIf="!authService.loggedIn">
+      <div id="right-content">
+        <mat-form-field color="primary" appearance="fill" [formGroup]="loginFormGroup" subscriptSizing="dynamic">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username"/>
+        </mat-form-field>
+
+        <mat-form-field color="primary" appearance="fill" [formGroup]="loginFormGroup" subscriptSizing="dynamic">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+          />
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="login()">Connexion</button>
+      </div>
+    </ng-container>
+    <div id="logout" *ngIf="authService.loggedIn">
+      <p>Bonjour {{ authService.userConnected?.username }}</p>
+      <button mat-raised-button color="accent" (click)="authService.logOut()">Déconnexion</button>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -11,7 +35,6 @@
   <mat-sidenav class="sidenav" #sidenav>
     <mat-nav-list>
       <a mat-list-item routerLink="home">Accueil</a>
-      <a *ngIf="!authService.loggedIn;" mat-list-item routerLink="login">Connexion</a>
       <a *ngIf="authService.loggedIn" mat-list-item (click)="authService.logOut()">Déconnexion</a>
     </mat-nav-list>
   </mat-sidenav>

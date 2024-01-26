@@ -6,7 +6,27 @@
   width: 300px;
 }
 
-mat-toolbar-row > a{
+a{
   text-decoration: none;
   color: white;
+}
+
+mat-toolbar-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & p{
+    margin-right: 10px;
+  }
+}
+
+#left-content, #right-content, #logout{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+mat-form-field {
+  transform: scale(0.8);
 }

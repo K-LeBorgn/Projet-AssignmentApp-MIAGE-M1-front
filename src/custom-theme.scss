@@ -36,8 +36,33 @@ $custom-primary: (
     900: white,
   )
 );
+
+$custom-accent: (
+  50: white,
+  100: white,
+  200: white,
+  300: white,
+  400: white,
+  500: white,
+  600: white,
+  700: white,
+  800: white,
+  900: white,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
 $projet-assignments-front-primary: mat.define-palette($custom-primary, 800);
-$projet-assignments-front-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$projet-assignments-front-accent: mat.define-palette($custom-accent, 800);
 
 // The warn palette is optional (defaults to red).
 $projet-assignments-front-warn: mat.define-palette(mat.$red-palette);

@@ -38,8 +38,8 @@
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-raised-button color="primary" routerLink="/home">Retour</button>
-          <button mat-raised-button color="primary" routerLink="/assignment/edit/{{ assignment!.id }}" [disabled]="!loggedIn">Modifier</button>
-          <button mat-mini-fab color="primary" (click)="onDelete()" [disabled]="!admin">
+          <button mat-raised-button color="primary" routerLink="/assignment/edit/{{ assignment!.id }}" [disabled]="!authService.loggedIn">Modifier</button>
+          <button mat-mini-fab color="primary" (click)="onDelete()" [disabled]="!authService.admin">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-card-actions>

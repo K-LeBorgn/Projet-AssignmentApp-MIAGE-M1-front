@@ -13,8 +13,6 @@ export class AssignementDetailsComponent implements OnInit {
   assignment: Assignment | null = null;
   error : boolean = false;
   circleColor: string = '';
-  loggedIn : boolean  = false;
-  admin : boolean = false;
 
   constructor(
     public assignmentService: AssignmentService,
@@ -29,13 +27,6 @@ export class AssignementDetailsComponent implements OnInit {
       .subscribe((assignment) => {
         this.assignment = assignment;
       });
-
-    this.authService.isLogged().then((data) => {
-      this.loggedIn = data;
-    });
-    this.authService.isAdmin().then((data) => {
-      this.admin = data;
-    });
   }
 
   getNoteStyle(note: number): string {
@@ -64,7 +55,7 @@ export class AssignementDetailsComponent implements OnInit {
         if (error.status === 403) {
           this.authService.getNewAccessToken().subscribe({
             next: (data: any) => {
-              this.authService.setAccessToken(data.accessToken);
+              this.authService.accessToken = data.accessToken;
               this.assignmentService.deleteAssignment(this.assignment!).subscribe(() => {
                 this.route.navigate(['/home']);
               });

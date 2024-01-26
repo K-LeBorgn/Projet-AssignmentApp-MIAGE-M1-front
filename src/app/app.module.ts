@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
 import { AddAssignmentDialogComponent } from './components/add-assignment-dialog/add-assignment-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
@@ -36,7 +35,6 @@ registerLocaleData(localeFr, 'fr');
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     AddAssignmentDialogComponent,
     AssignementDetailsComponent,
     EditAssignmentComponent,

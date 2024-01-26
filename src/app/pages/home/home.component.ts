@@ -50,8 +50,6 @@ export class HomeComponent implements OnInit {
 
   actualLimit: number = 5;
 
-  loggedIn: boolean = false;
-
   @ViewChild(MatSort) sort: MatSort | null = null;
   dataSource: MatTableDataSource<Assignment> | null = null;
 
@@ -67,11 +65,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAssignments(this.page, this.limit);
-    this.authService.isLogged().then((data) => {
-      if (data) {
-        this.loggedIn = true;
-      }
-    });
   }
 
   getAssignments(page: number, limit: number) {
@@ -112,6 +105,15 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  getAssignmentsRendu() {
+    this.assignmentsService.getAssignmentsRendu(this.page, this.actualLimit).subscribe((data) => {
+      this.assignments = data.docs;
+
+      this.dataSource = new MatTableDataSource<Assignment>(this.assignments);
+      this.dataSource.sort = this.sort;
+    });
+  }
+
   peuplerBD() {
     this.assignmentsService.peuplerBDavecForkJoin().subscribe(() => {
       //console.log("LA BD A ETE PEUPLEE, TOUS LES ASSIGNMENTS AJOUTES, ON RE-AFFICHE LA LISTE");
@@ -127,6 +129,14 @@ export class HomeComponent implements OnInit {
     }
     else {
       this.getAssignments(event.pageIndex + 1, event.pageSize)
+    }
+  }
+
+  onCheckBoxChange(event: any) {
+    if (event.checked) {
+      this.getAssignmentsRendu();
+    } else {
+      this.getAssignments(this.page, this.actualLimit);
     }
   }
 
