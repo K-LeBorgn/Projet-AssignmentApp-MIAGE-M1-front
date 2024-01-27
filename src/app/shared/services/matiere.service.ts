@@ -13,7 +13,7 @@ export class MatiereService {
     private http: HttpClient,
   ) {}
 
-  url = 'http://localhost:8010/api/matieres';
+  url = 'https://projetassignmentmiage-backend.onrender.com/api/matieres';
 
   getMatieres(): Observable<Matiere[]> {
     return this.http.get<Matiere[]>(this.url);
