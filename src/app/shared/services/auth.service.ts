@@ -3,12 +3,13 @@ import { User } from '../models/user.model';
 import { HttpClient } from "@angular/common/http";
 import { LoginResponse } from "../response/loginResponse";
 import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private _snackBar : MatSnackBar) {}
 
   url = 'http://localhost:8010/api'
   loggedIn : boolean = false;
@@ -32,8 +33,11 @@ export class AuthService {
     this.userConnected = undefined;
     this.accessToken = undefined;
     this.refreshToken = undefined;
-    window.location.reload();
+    this._snackBar.open('Déconnexion réussie', '',{
+      duration: 2000,
+    });
   }
+
 
   isLogged(): Promise<boolean> {
     return new Promise((resolve, reject) => {

@@ -7,6 +7,7 @@ import {Matiere} from "../../shared/models/matiere.model";
 import {MatiereService} from "../../shared/services/matiere.service";
 import {Location} from "@angular/common";
 import {AuthService} from "../../shared/services/auth.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-edit-assignment',
@@ -18,7 +19,12 @@ export class EditAssignmentComponent implements OnInit{
   matieres: Matiere[] | null = null;
 
   assignmentFormGroup: FormGroup | null = null;
-  constructor(private assignmentService : AssignmentService, private matiereService : MatiereService, private activatedRoute: ActivatedRoute, private location: Location, private authService : AuthService) { }
+  constructor(private assignmentService : AssignmentService,
+              private matiereService : MatiereService,
+              private activatedRoute: ActivatedRoute,
+              private location: Location,
+              private authService : AuthService,
+              private _snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
     this.assignmentService.getAssignment(this.activatedRoute.snapshot.params['id'])
@@ -49,7 +55,9 @@ export class EditAssignmentComponent implements OnInit{
     else updatedAssignment.note = parseInt(this.assignmentFormGroup!.value.note);
 
     this.assignmentService.updateAssignment(updatedAssignment).subscribe((data) => {
-      console.log(data);
+      this._snackBar.open( "Modification de l'assignment réussi", '',{
+        duration: 2000,
+      });
       this.location.back();
     });
   }
