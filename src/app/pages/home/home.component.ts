@@ -48,6 +48,8 @@ export class HomeComponent implements OnInit {
   assignmentName: string = '';
   getByName: boolean = false;
 
+  rendu: boolean = false;
+
   actualLimit: number = 5;
 
   @ViewChild(MatSort) sort: MatSort | null = null;
@@ -105,9 +107,16 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  getAssignmentsRendu() {
-    this.assignmentsService.getAssignmentsRendu(this.page, this.actualLimit).subscribe((data) => {
+  getAssignmentsRendu(page : number, limit : number) {
+    this.assignmentsService.getAssignmentsRendu(page, limit).subscribe((data) => {
       this.assignments = data.docs;
+      this.page = data.page;
+      this.totalDocs = data.totalDocs;
+      this.totalPages = data.totalPages;
+      this.hasPrevPage = data.hasPrevPage;
+      this.prevPage = data.prevPage;
+      this.hasNextPage = data.hasNextPage;
+      this.nextPage = data.nextPage;
 
       this.dataSource = new MatTableDataSource<Assignment>(this.assignments);
       this.dataSource.sort = this.sort;
@@ -127,6 +136,9 @@ export class HomeComponent implements OnInit {
     if(this.getByName){
       this.getAssignmentsByName(event.pageIndex + 1, event.pageSize);
     }
+    else if(this.rendu){
+      this.getAssignmentsRendu(event.pageIndex + 1, event.pageSize);
+    }
     else {
       this.getAssignments(event.pageIndex + 1, event.pageSize)
     }
@@ -134,8 +146,10 @@ export class HomeComponent implements OnInit {
 
   onCheckBoxChange(event: any) {
     if (event.checked) {
-      this.getAssignmentsRendu();
+      this.rendu = true;
+      this.getAssignmentsRendu(this.page, this.actualLimit);
     } else {
+      this.rendu = false;
       this.getAssignments(this.page, this.actualLimit);
     }
   }

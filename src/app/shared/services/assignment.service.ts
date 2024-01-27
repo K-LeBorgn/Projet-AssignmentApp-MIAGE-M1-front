@@ -4,9 +4,7 @@ import { Assignment } from '../models/assignment.model';
 import { forkJoin, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { bdInitialAssignments } from '../data/data_assignments';
-import { bdInitialMatieres } from '../data/data_matieres';
 import { AddAssignmentRequest } from '../models/addAssignmentRequest.model';
-import { bdInitialEleves } from '../data/data_eleves';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -81,28 +79,6 @@ export class AssignmentService {
 
       appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment));
     });
-
-    /*bdInitialMatieres.forEach(m => {
-      const nouveleMatiere = {
-        id: m.id,
-        nom: m.nom,
-        prof: m.prof,
-        imageMatiere: m.imageMatiere,
-        imageProf: m.imageProf
-      };
-
-      appelsVersAddAssignment.push(this.http.post('http://localhost:8010/api/matieres', nouveleMatiere));
-    });*/
-
-    /*bdInitialEleves.forEach(e => {
-      const nouvelEleve = {
-        id: e.id,
-        nom: e.nom,
-        prenom: e.prenom
-      };
-
-      appelsVersAddAssignment.push(this.http.post('http://localhost:8010/api/eleves', nouvelEleve));
-    });*/
 
     return forkJoin(appelsVersAddAssignment);
   }
