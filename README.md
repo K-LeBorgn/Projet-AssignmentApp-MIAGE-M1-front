@@ -2,26 +2,39 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
 
-## Development server
+## Hosting
+L'application est hébergée sur Render.com à cette URL : <br>https://projetassignmentmiage-frontend.onrender.com<br>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Fonctionnalités
 
-## Code scaffolding
+- Connexion et déconnexion d'un utilisateur via Json Web Token
+- Création d'un assignment avec choix de la matière
+- Ajout d'assignment via formulaire Stepper
+- Modification & suppression d'un assignment
+- Affichage de la liste des assignments avec pagination
+- Affichage d'un assignment en détail
+- Trier les assignments par nom, date de rendu et par note
+- Rechercher un assignment par nom
+- Filtrer les assignments selon leur statut (rendu ou non rendu)
+- Matière et auteur reliés aux assignments, l'utilisateur qui crée l'assignment est automatiquement associé à celui-ci
+- Les professeurs et les images sont déjà associés à une matière
+- Messages de notification selon les actions effectuées
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Comptes utilisateurs
+Il existe 3 comptes utilisateurs :
+- User :
+  - DemoUser : 
+    - username : DemoUser 
+    - password : DemoUser
+    - rôle : user
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Admins :
+  - Le Borgne : 
+    - username : LeBorgne 
+    - password : LeBorgne
+    - rôle : admin 
+  
+  - Lessatini : 
+    - username : Lessatini 
+    - password : Lessatini
+    - rôle : admin
