@@ -11,7 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class AuthService {
   constructor(private http: HttpClient, private _snackBar : MatSnackBar) {}
 
-  url = 'http://localhost:8010/api'
+  url = 'https://projetassignmentmiage-backend.onrender.com/api'
   loggedIn : boolean = false;
   admin : boolean = false;
   userConnected: User | undefined = undefined;

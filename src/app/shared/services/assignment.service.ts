@@ -19,7 +19,7 @@ export class AssignmentService {
     private authService: AuthService
   ) {}
 
-  url = 'http://localhost:8010/api/assignments';
+  url = 'https://projetassignmentmiage-backend.onrender.com/api/assignments';
 
   getAssignment(id: any): Observable<Assignment> {
     return this.http.get<Assignment>(`${this.url}/${id}`);
