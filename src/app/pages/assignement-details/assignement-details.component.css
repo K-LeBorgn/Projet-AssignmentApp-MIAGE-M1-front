@@ -14,7 +14,7 @@
   align-items: center;
   width: 100%;
 
-  p {
+  & p {
     margin: 0;
     color: #2e684d;
   }
