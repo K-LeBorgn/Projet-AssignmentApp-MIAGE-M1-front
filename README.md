@@ -7,7 +7,7 @@ Le projet est présenté dans une vidéo youtube mise en ligne à cette url : [h
 
 ## Hosting
 L'application est hébergée sur Render.com à cette URL : <br>https://projetassignmentmiage-frontend.onrender.com<br><br>
-Render.com désactive les projets inactif au bout d'un certain, il est donc possible que le projet ne fonctionne pas quand vous essairez de vous y connecter, si vous voulez vraiment tester l'application envoyer nous un mail à l'une de ces deux adresses mail :
+Render.com désactive les projets inactif au bout d'un certain, il est donc possible que le projet ne fonctionne pas quand vous essaierez de vous y connecter, si vous voulez vraiment tester l'application envoyer nous un mail à l'une de ces deux adresses mail :
 
 - killian.le-borgne@etu.univ-cotedazur.fr
 - morgane.lessatini@etu.univ-cotedazur.fr
