@@ -75,7 +75,7 @@ export class EditAssignmentComponent implements OnInit{
               this._snackBar.open('Erreur lors de la modification', '',{
                 duration: 2000,
               });
-            };
+            }
         })
       })
     }});
