@@ -54,12 +54,31 @@ export class EditAssignmentComponent implements OnInit{
     if(!updatedAssignment.rendu) updatedAssignment.note = null;
     else updatedAssignment.note = parseInt(this.assignmentFormGroup!.value.note);
 
-    this.assignmentService.updateAssignment(updatedAssignment).subscribe((data) => {
-      this._snackBar.open( "Modification de l'assignment réussi", '',{
-        duration: 2000,
-      });
-      this.location.back();
-    });
+    this.assignmentService.updateAssignment(updatedAssignment).subscribe({
+      next: () => {
+        this._snackBar.open('Devoir modifié', '',{
+          duration: 2000,
+        });
+        this.location.back();
+      },
+      error: (err) => {
+        this.authService.getNewAccessToken().subscribe((response : any) => {
+          this.authService.accessToken = response.accessToken;
+          this.assignmentService.updateAssignment(updatedAssignment).subscribe({
+            next: () => {
+              this._snackBar.open('Devoir modifié', '',{
+                duration: 2000,
+              });
+              this.location.back();
+            },
+            error: (err) => {
+              this._snackBar.open('Erreur lors de la modification', '',{
+                duration: 2000,
+              });
+            };
+        })
+      })
+    }});
   }
 
   onChange(){
